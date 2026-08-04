@@ -35,3 +35,13 @@ form {
 .habbit-wrapper {
     margin: 30px;
 }
+
+.habbit-el {
+    border: #000000 solid 1px;
+    text-align: left;
+    padding: 5px;
+}
+
+.checkbox {
+    float: right;
+}
