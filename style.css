@@ -1,0 +1,37 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.wrapper {
+    margin: 50px 100px;
+}
+
+.wrapper>* {
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    font-size:larger;
+}
+
+form {
+    height: 40px;
+}
+
+.annotation {
+    display: inline-block;
+    width: 100%;
+    color: #000000a8;
+    font-size:larger;
+    margin-bottom: 30px;
+}
+
+.habbit-wrapper {
+    margin: 30px;
+}
