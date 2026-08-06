@@ -33,6 +33,10 @@ form {
 }
 
 .habbit-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2%;
+    align-items: center;
     margin: 30px;
 }
 
@@ -40,6 +44,7 @@ form {
     border: #000000 solid 1px;
     text-align: left;
     padding: 5px;
+    width: 98%;
 }
 
 .checkbox {
