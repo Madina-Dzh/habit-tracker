@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="2">
     <title>habit-tracker</title>
     <link href="style.css" rel="stylesheet">
 </head>
@@ -13,16 +12,16 @@
     <div class="wrapper">
         <h1>Трекер привычек</h1>
         <span class="annotation">Отслеживай прогресс каждый день</span>
-        <form>
-            <input />
+        <div class="form">
+            <input id="valHabit_input"/>
             <select>
                 <option value="">Сделать 1 раз</option>
                 <option value="">X раз в день</option>
                 <option value="">N минут</option>
             </select>
             <input type="number" placeholder="Значение X/N" />
-            <button>Добавить</button>
-        </form>
+            <button id="addHabit_button">Добавить</button>
+        </div>
         <section class="statistics">
             <h2>Статистика</h2>
             <p>Сегодня выполнено: [число]</p>
