@@ -42,8 +42,10 @@ addHabit_button.onclick = function () {
     };
 
     habits.push(habit); // Добавление объекта в массив привычек
-    console.log(habits);
+
     renderHabits();
+    saveHabits();
+    console.log(habits);
 }
 
 // Выгрузка данных их хранилища при перезагрузке
@@ -59,5 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
     {
         habits = JSON.parse(storedData);
         console.log(habits);
-    }
+    };
+
+    renderHabits();
 });
+
+function saveHabits() {
+    localStorage.setItem('habits', JSON.stringify(habits));
+}
