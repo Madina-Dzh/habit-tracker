@@ -7,14 +7,15 @@ function renderHabits() {
     wrapper.innerHTML = '';
 
     // перебор всей привычек
-    habits.forEach((hobit) => {
+    habits.forEach((habit) => {
         // создание блока карточки
         const newHabit = document.createElement('div');
+        newHabit.setAttribute('id', habit.id)
         newHabit.classList.add('habbit-el');
 
         // создание тега span с текстом
         const spanHabit = document.createElement('span');
-        spanHabit.textContent = hobit.text;
+        spanHabit.textContent = habit.text;
 
         // создание радиокнопки
         const radioButtonHabit = document.createElement('input');
@@ -31,16 +32,17 @@ function renderHabits() {
 }
 
 // кнопка заглушка "Добавить"
-addHabit_button.onclick = function() {
+addHabit_button.onclick = function () {
     const valHabit = document.getElementById('valHabit_input'); // получить текст для привычки
-    
+
     // Создание объекта привычка
     const habit = {
-    text: valHabit.value,
-    isReady: false
+        id: Date.now(),
+        text: valHabit.value,
+        isReady: false
     };
-    console.log(habit.text);
 
     habits.push(habit); // Добавление объекта в массив привычек
+    console.log(habits);
     renderHabits();
 }
