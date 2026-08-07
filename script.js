@@ -17,14 +17,9 @@ function renderHabits() {
         const spanHabit = document.createElement('span');
         spanHabit.textContent = habit.text;
 
-        // создание радиокнопки
-        const radioButtonHabit = document.createElement('input');
-        radioButtonHabit.setAttribute('type', 'checkbox');
-        radioButtonHabit.classList.add('checkbox');
 
         // Включение текста и радиокнопки в привычку
         newHabit.appendChild(spanHabit);
-        newHabit.appendChild(radioButtonHabit);
 
         // Включение привычки в контейнер
         wrapper.appendChild(newHabit);
