@@ -34,11 +34,13 @@ function renderHabits() {
 // кнопка заглушка "Добавить"
 addHabit_button.onclick = function () {
     const valHabit = document.getElementById('valHabit_input'); // получить текст для привычки
+    const typeGoal = document.getElementById('type_select');
 
     // Создание объекта привычка
     const habit = {
         id: Date.now(),
         text: valHabit.value,
+        type: typeGoal.value,
         isReady: false
     };
 
