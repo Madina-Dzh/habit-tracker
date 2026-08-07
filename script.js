@@ -24,6 +24,10 @@ function renderHabits() {
         // Включение привычки в контейнер
         wrapper.appendChild(newHabit);
     });
+
+    if (habits.length === 0) {
+        wrapper.textContent = 'Пока нет привычек - создай первую';
+    }
 }
 
 // кнопка заглушка "Добавить"
