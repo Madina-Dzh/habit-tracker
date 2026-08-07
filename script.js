@@ -35,12 +35,14 @@ function renderHabits() {
 addHabit_button.onclick = function () {
     const valHabit = document.getElementById('valHabit_input'); // получить текст для привычки
     const typeGoal = document.getElementById('type_select');
+    const goalCount = document.getElementById('goal_input');
 
     // Создание объекта привычка
     const habit = {
         id: Date.now(),
         text: valHabit.value,
         type: typeGoal.value,
+        goal: goalCount.value,
         isReady: false
     };
 
