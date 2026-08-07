@@ -45,3 +45,19 @@ addHabit_button.onclick = function () {
     console.log(habits);
     renderHabits();
 }
+
+// Выгрузка данных их хранилища при перезагрузке
+document.addEventListener('DOMContentLoaded', function() {
+    const storedData = localStorage.getItem('habits');
+    if (storedData === null)
+    {
+        // Если данных нет
+        habits = [];
+        console.log('Данных нет');
+    }
+    else 
+    {
+        habits = JSON.parse(storedData);
+        console.log(habits);
+    }
+});
