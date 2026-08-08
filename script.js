@@ -17,7 +17,6 @@ function renderHabits() {
         const spanHabit = document.createElement('span');
         spanHabit.textContent = habit.text;
 
-
         // Включение текста и радиокнопки в привычку
         newHabit.appendChild(spanHabit);
 
@@ -42,6 +41,7 @@ addHabit_button.onclick = function () {
         text: valHabit.value,
         type: typeGoal.value,
         goal: goalCount.value,
+        history =[],
         isReady: false
     };
 
@@ -53,16 +53,14 @@ addHabit_button.onclick = function () {
 }
 
 // Выгрузка данных их хранилища при перезагрузке
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const storedData = localStorage.getItem('habits');
-    if (storedData === null)
-    {
+    if (storedData === null) {
         // Если данных нет
         habits = [];
         console.log('Данных нет');
     }
-    else 
-    {
+    else {
         habits = JSON.parse(storedData);
         console.log(habits);
     };
@@ -72,4 +70,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function saveHabits() {
     localStorage.setItem('habits', JSON.stringify(habits));
+}
+
+// получить сегоднящнюю дату в формате YYYY-MM-DD
+function formatDateISO(date = new Date()) {
+    return date.toISOString().split('T');
+}
+
+// определить, отмечена ли привычка сегодня
+function markDetectionToday(habit) {
+    const today = formatDateISO();
+    if (habit.history.length > 0) {
+        return habit.history.some((h) => h === today)
+    }
+    else return false
 }
