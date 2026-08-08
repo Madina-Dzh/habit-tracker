@@ -7,7 +7,7 @@ function renderHabits() {
     wrapper.innerHTML = '';
 
     // перебор всей привычек
-    habits.forEach((habit) => {
+    habits.forEach((habit) => { 
         // создание блока карточки
         const newHabit = document.createElement('div');
         newHabit.setAttribute('id', habit.id)
@@ -17,8 +17,14 @@ function renderHabits() {
         const spanHabit = document.createElement('span');
         spanHabit.textContent = habit.text;
 
-        // Включение текста и радиокнопки в привычку
+        // Создание кнопки "Сделано сегодня"
+        const btnMark = document.createElement('button');
+        btnMark.textContent = 'Сделано сегодня';
+        btnMark.classList.add('right');
+
+        // Включение текста и кнопки в привычку
         newHabit.appendChild(spanHabit);
+        newHabit.appendChild(btnMark);
 
         // Включение привычки в контейнер
         wrapper.appendChild(newHabit);
@@ -41,7 +47,7 @@ addHabit_button.onclick = function () {
         text: valHabit.value,
         type: typeGoal.value,
         goal: goalCount.value,
-        history =[],
+        history: [],
         isReady: false
     };
 
@@ -85,3 +91,4 @@ function markDetectionToday(habit) {
     }
     else return false
 }
+
