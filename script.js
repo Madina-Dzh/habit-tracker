@@ -3,7 +3,7 @@ const addHabit_button = document.getElementById('addHabit_button');
 
 // функция очищает контейнер списка и рисует карточки по массиву habits
 function renderHabits() {
-    const wrapper = document.getElementById('habbit-wrapper'); // контейнер со списком привычек 
+    const wrapper = document.getElementById('habit-wrapper'); // контейнер со списком привычек 
     wrapper.innerHTML = '';
 
     // перебор всей привычек
@@ -11,7 +11,7 @@ function renderHabits() {
         // создание блока карточки
         const newHabit = document.createElement('div');
         newHabit.setAttribute('id', habit.id)
-        newHabit.classList.add('habbit-el');
+        newHabit.classList.add('habit-el');
 
         // создание тега span с текстом
         const spanHabit = document.createElement('span');
