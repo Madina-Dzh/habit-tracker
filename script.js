@@ -1,13 +1,13 @@
 let habits = []; // массив с привычками
 const addHabit_button = document.getElementById('addHabit_button');
+const wrapper = document.getElementById('habit-wrapper'); // контейнер со списком привычек 
 
 // функция очищает контейнер списка и рисует карточки по массиву habits
 function renderHabits() {
-    const wrapper = document.getElementById('habit-wrapper'); // контейнер со списком привычек 
     wrapper.innerHTML = '';
 
     // перебор всей привычек
-    habits.forEach((habit) => { 
+    habits.forEach((habit) => {
         // создание блока карточки
         const newHabit = document.createElement('div');
         newHabit.setAttribute('id', habit.id)
@@ -20,7 +20,7 @@ function renderHabits() {
         // Создание кнопки "Сделано сегодня"
         const btnMark = document.createElement('button');
         btnMark.textContent = 'Сделано сегодня';
-        btnMark.classList.add('right');
+        btnMark.classList.add('mark-btn');
 
         // Включение текста и кнопки в привычку
         newHabit.appendChild(spanHabit);
@@ -80,7 +80,7 @@ function saveHabits() {
 
 // получить сегоднящнюю дату в формате YYYY-MM-DD
 function formatDateISO(date = new Date()) {
-    return date.toISOString().split('T');
+    return date.toISOString().split('T')[0];
 }
 
 // определить, отмечена ли привычка сегодня
@@ -92,3 +92,49 @@ function markDetectionToday(habit) {
     else return false
 }
 
+// при нажатии на привычку
+wrapper.addEventListener('click', function (event) {
+    const clickedElement = event.target;
+    const habitEl = clickedElement.closest('.habit-el');
+    const habitID = habitEl.id;
+    const today = formatDateISO();
+    const minute = 10; // В будущем брать из поля ввода в привычке
+    console.log(habitID);
+
+    // Нажата кнопка "Сделано сегодня"
+    if (clickedElement.classList.contains('mark-btn')) {
+        // Логика нажатия на кнопку
+        const habit = habits.find(h => h.id == habitID);
+
+        if (habit.type === 'once') {
+            if (habit.history.some((h) => h.date === today)) {
+                alert('Эта привычка уже отмечена сегодня');
+            }
+            else {
+                habit.history.push({ date: today, value: 1 });
+            }
+        }
+        else if (habit.type === 'x') {
+            // Логика x раз
+            if (habit.history.some((h) => h.date === today)) {
+                let index = habit.history.findIndex(item => item.date === today); // Индекс записи в истории сегодня
+                habit.history[index].value = habit.history[index].value + 1;
+            }
+            else {
+                habit.history.push({ date: today, value: 1 })
+            }
+        }
+        else {
+            // Логика n Minute сделать
+            if (habit.history.some((h) => h.date === today)) {
+                let index = habit.history.findIndex(item => item.date === today); // Индекс записи в истории сегодня
+                habit.history[index].value = habit.history[index].value + minute;
+            }
+            else {
+                habit.history.push({ date: today, value: minute })
+            }
+        }
+    }
+    saveHabits();
+    renderHabits();
+})
