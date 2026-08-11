@@ -35,6 +35,15 @@ function renderHabits() {
     }
 }
 
+// расчитывает прогресс для каждой привычки
+function calcProgress(habit) {
+    let sum = 0;
+    habit.history.forEach(h => {
+        sum = sum + h.value;
+    });
+    return Math.round(sum / habit.goal * 100);
+}
+
 // кнопка заглушка "Добавить"
 addHabit_button.onclick = function () {
     const valHabit = document.getElementById('valHabit_input'); // получить текст для привычки
