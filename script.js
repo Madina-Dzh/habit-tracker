@@ -17,14 +17,22 @@ function renderHabits() {
         const spanHabit = document.createElement('span');
         spanHabit.textContent = habit.text;
 
+        // Создание прогресс бара
+        const progressBar = document.createElement('progress');
+        progressBar.classList.add('right');
+        progressBar.setAttribute('max', '100');
+        progressBar.setAttribute('value', calcProgress(habit));
+
         // Создание кнопки "Сделано сегодня"
         const btnMark = document.createElement('button');
         btnMark.textContent = 'Сделано сегодня';
         btnMark.classList.add('mark-btn');
+        btnMark.classList.add('right');
 
         // Включение текста и кнопки в привычку
         newHabit.appendChild(spanHabit);
         newHabit.appendChild(btnMark);
+        newHabit.appendChild(progressBar);
 
         // Включение привычки в контейнер
         wrapper.appendChild(newHabit);
@@ -49,6 +57,7 @@ addHabit_button.onclick = function () {
     const valHabit = document.getElementById('valHabit_input'); // получить текст для привычки
     const typeGoal = document.getElementById('type_select');
     const goalCount = document.getElementById('goal_input');
+    if (goalCount.value === '') goalCount.value = 1;
 
     // Создание объекта привычка
     const habit = {
