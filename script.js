@@ -45,8 +45,14 @@ function renderHabits() {
 
 // расчитывает прогресс для каждой привычки
 function calcProgress(habit) {
-    const todayValue = habit.history.find(h => h.date === formatDateISO());
-    return Math.round(2 / habit.goal * 100);
+    const today = formatDateISO();
+    const record = habit.history.find(h => h.date === today);
+
+    // Если записи за сегодня нет — прогресс 0
+    if (!record) return 0;
+
+    const done = record.value; // вот это число, которое нужно
+    return Math.min(100, Math.round((done / habit.goal) * 100));
 }
 
 // кнопка заглушка "Добавить"
