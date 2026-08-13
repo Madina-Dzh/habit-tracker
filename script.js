@@ -36,7 +36,7 @@ function renderHabits() {
         // Создание поля для ввода минут
         if (habit.type === 'n') {
             const inputMinutes = document.createElement('input');
-            inputMinutes.setAttribute('type', 'text');
+            inputMinutes.setAttribute('type', 'number');
             inputMinutes.setAttribute('placeholder', 'Количество минут');
             inputMinutes.classList.add('num-minutes');
             inputMinutes.classList.add('right');
@@ -163,7 +163,7 @@ wrapper.addEventListener('click', function (event) {
                 habit.history.push({ date: today, value: minute })
             }
         }
+        saveHabits();
+        renderHabits();
     }
-    saveHabits();
-    renderHabits();
 })
