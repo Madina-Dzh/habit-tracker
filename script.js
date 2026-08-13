@@ -16,12 +16,7 @@ function renderHabits() {
         // создание тега span с текстом
         const spanHabit = document.createElement('span');
         spanHabit.textContent = habit.text;
-
-        // Создание прогресс бара
-        const progressBar = document.createElement('progress');
-        progressBar.classList.add('right');
-        progressBar.setAttribute('max', '100');
-        progressBar.setAttribute('value', calcProgress(habit));
+        newHabit.appendChild(spanHabit);
 
         // Создание кнопки "Сделано сегодня"
         const btnMark = document.createElement('button');
@@ -29,10 +24,24 @@ function renderHabits() {
         btnMark.classList.add('mark-btn');
         btnMark.classList.add('right');
 
-        // Включение текста и кнопки в привычку
-        newHabit.appendChild(spanHabit);
         newHabit.appendChild(btnMark);
+
+        // Создание прогресс бара
+        const progressBar = document.createElement('progress');
+        progressBar.classList.add('right');
+        progressBar.setAttribute('max', '100');
+        progressBar.setAttribute('value', calcProgress(habit));
         newHabit.appendChild(progressBar);
+
+        // Создание поля для ввода минут
+        if (habit.type === 'n') {
+            const inputMinutes = document.createElement('input');
+            inputMinutes.setAttribute('type', 'text');
+            inputMinutes.setAttribute('placeholder', 'Количество минут');
+            inputMinutes.classList.add('num-minutes');
+            inputMinutes.classList.add('right');
+            newHabit.appendChild(inputMinutes);
+        }
 
         // Включение привычки в контейнер
         wrapper.appendChild(newHabit);
@@ -120,7 +129,6 @@ wrapper.addEventListener('click', function (event) {
     const habitID = habitEl.id;
     const today = formatDateISO();
     const minute = 10; // В будущем брать из поля ввода в привычке
-    console.log(habitID);
 
     // Нажата кнопка "Сделано сегодня"
     if (clickedElement.classList.contains('mark-btn')) {
