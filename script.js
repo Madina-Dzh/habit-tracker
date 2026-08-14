@@ -128,8 +128,8 @@ wrapper.addEventListener('click', function (event) {
     const habitEl = clickedElement.closest('.habit-el');
     const habitID = habitEl.id;
     const today = formatDateISO();
-    const minute = 10; // В будущем брать из поля ввода в привычке
-
+    const minutes = habitEl.querySelector('.num-minutes');
+    //const minute = 10; // В будущем брать из поля ввода в привычке
     // Нажата кнопка "Сделано сегодня"
     if (clickedElement.classList.contains('mark-btn')) {
         // Логика нажатия на кнопку
@@ -157,7 +157,7 @@ wrapper.addEventListener('click', function (event) {
             // Логика n Minute сделать
             if (habit.history.some((h) => h.date === today)) {
                 let index = habit.history.findIndex(item => item.date === today); // Индекс записи в истории сегодня
-                habit.history[index].value = habit.history[index].value + minute;
+                habit.history[index].value = minutes.value;
             }
             else {
                 habit.history.push({ date: today, value: minute })
