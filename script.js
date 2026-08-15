@@ -40,6 +40,9 @@ function renderHabits() {
             inputMinutes.setAttribute('placeholder', 'Количество минут');
             inputMinutes.classList.add('num-minutes');
             inputMinutes.classList.add('right');
+
+            const record = habit.history.find(h => h.date === formatDateISO());
+            if (record) inputMinutes.value = record.value;
             newHabit.appendChild(inputMinutes);
         }
 
@@ -57,10 +60,9 @@ function calcProgress(habit) {
     const today = formatDateISO();
     const record = habit.history.find(h => h.date === today);
 
-    // Если записи за сегодня нет — прогресс 0
     if (!record) return 0;
 
-    const done = record.value; // вот это число, которое нужно
+    const done = record.value;
     return Math.min(100, Math.round((done / habit.goal) * 100));
 }
 
@@ -160,7 +162,7 @@ wrapper.addEventListener('click', function (event) {
                 habit.history[index].value = minutes.value;
             }
             else {
-                habit.history.push({ date: today, value: minute })
+                habit.history.push({ date: today, value: minutes })
             }
         }
         saveHabits();
