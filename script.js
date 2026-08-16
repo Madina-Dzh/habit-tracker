@@ -167,5 +167,25 @@ wrapper.addEventListener('click', function (event) {
         }
         saveHabits();
         renderHabits();
+        recordStatistics();
     }
 })
+
+// Подсчёт выполненных сегодня привычек
+function calcCompletedToday() {
+    let count = 0;
+    const today = formatDateISO();
+    habits.forEach(habit => {
+        const record = habit.history.find(h => h.date === today);
+        if (record && record.value >= parseInt(habit.goal)) {
+            count++;
+        };
+    });
+    return count;
+}
+
+// Заполнение полей статистики
+function recordStatistics() {
+    const numCompletedspan = document.getElementById('number-completed');
+    numCompletedspan.textContent = 'Сегодня выполнено: ' + calcCompletedToday();
+}
