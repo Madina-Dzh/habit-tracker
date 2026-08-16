@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     renderHabits();
+    recordStatistics();
 });
 
 function saveHabits() {
