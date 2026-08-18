@@ -56,9 +56,8 @@ function renderHabits() {
 }
 
 // расчитывает прогресс для каждой привычки
-function calcProgress(habit) {
-    const today = formatDateISO();
-    const record = habit.history.find(h => h.date === today);
+function calcProgress(habit, date = formatDateISO()) {
+    const record = habit.history.find(h => h.date === date);
 
     if (!record) return 0;
 
@@ -172,7 +171,7 @@ wrapper.addEventListener('click', function (event) {
     }
 })
 
-// Подсчёт выполненных сегодня привычек
+// подсчёт выполненных сегодня привычек
 function calcCompletedToday() {
     let count = 0;
     const today = formatDateISO();
@@ -185,8 +184,33 @@ function calcCompletedToday() {
     return count;
 }
 
-// Заполнение полей статистики
+// для подсчёта средней доли выполнения за последние 7 дней
+function calcAvg7Days() {
+    let totalSum = 0;
+    habits.forEach(habit => {
+        let currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 7);
+        let count = 0;
+        let procent = 0;
+
+        for (let i = 7; i > 0; i--) {
+            currentDate.setDate(currentDate.getDate() + 1);
+            const progress = calcProgress(habit, formatDateISO(currentDate));
+            if (progress > 0) {
+                procent += progress;
+                count++;
+            }
+        }
+        totalSum += procent / 7;
+    });
+    return Math.round(totalSum / habits.length * 100) / 100;
+}
+
+//заполнение полей статистики
 function recordStatistics() {
     const numCompletedspan = document.getElementById('number-completed');
+    const sevenDaysCmopletedSpan = document.getElementById('seven-days-completed');
+
     numCompletedspan.textContent = 'Сегодня выполнено: ' + calcCompletedToday();
+    sevenDaysCmopletedSpan.textContent = 'За неделю выполнено: ' + calcAvg7Days() + '%';
 }
