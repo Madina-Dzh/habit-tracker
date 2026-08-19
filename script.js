@@ -206,11 +206,28 @@ function calcAvg7Days() {
     return Math.round(totalSum / habits.length * 100) / 100;
 }
 
+// отсчёт longest streek для привычки
+function calcLongestStreak(habit) {
+    let count = 0;
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 7);
+    for (let i = 7; i > 1; i--) {
+        currentDate.setDate(currentDate.getDate() + 1);
+        const progress = calcProgress(habit, formatDateISO(currentDate));
+        if (progress === 100) count++;
+        else count = 0;
+    }
+    if (calcProgress(habit) === 100) count++;
+    return count;
+}
+
 //заполнение полей статистики
 function recordStatistics() {
     const numCompletedspan = document.getElementById('number-completed');
     const sevenDaysCmopletedSpan = document.getElementById('seven-days-completed');
+    const longestStreakSpan = document.getElementById('longest-streak');
 
     numCompletedspan.textContent = 'Сегодня выполнено: ' + calcCompletedToday();
     sevenDaysCmopletedSpan.textContent = 'За неделю выполнено: ' + calcAvg7Days() + '%';
+    longestStreakSpan.textContent = 'Лучший стрик: ' + calcLongestStreak(habits[1]);
 }
