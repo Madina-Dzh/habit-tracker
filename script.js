@@ -23,8 +23,14 @@ function renderHabits() {
         btnMark.textContent = 'Сделано сегодня';
         btnMark.classList.add('mark-btn');
         btnMark.classList.add('right');
-
         newHabit.appendChild(btnMark);
+
+        // Создание кнопки удаления 
+        const btnDel = document.createElement('button');
+        btnDel.textContent = 'Удалить';
+        btnDel.classList.add('del-btn');
+        btnDel.classList.add('right');
+        newHabit.appendChild(btnDel);
 
         // Создание прогресс бара
         const progressBar = document.createElement('progress');
