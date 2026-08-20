@@ -137,7 +137,7 @@ wrapper.addEventListener('click', function (event) {
     const habitID = habitEl.id;
     const today = formatDateISO();
     const minutes = habitEl.querySelector('.num-minutes');
-    //const minute = 10; // В будущем брать из поля ввода в привычке
+
     // Нажата кнопка "Сделано сегодня"
     if (clickedElement.classList.contains('mark-btn')) {
         // Логика нажатия на кнопку
@@ -174,6 +174,20 @@ wrapper.addEventListener('click', function (event) {
         saveHabits();
         renderHabits();
         recordStatistics();
+    }
+
+    // Нажата кнопка "Удалить"
+    if (clickedElement.classList.contains('del-btn')) {
+        let index = habits.findIndex(habit => habit.id === parseInt(habitID))
+        let textHabit = habits[index].text;
+        console.log(textHabit);
+        if(confirm(`Удалить привычку "${textHabit}"`)) {
+            if (index !== -1) {
+                habits.splice(index, 1);
+                saveHabits();
+                renderHabits();
+            }
+        }
     }
 })
 
