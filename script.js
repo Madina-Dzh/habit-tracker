@@ -72,7 +72,7 @@ function calcAvg7Days() {
     return Math.round(totalSum / habits.length * 100) / 100;
 }
 
-// отсчёт longest streek для привычки
+// отсчёт longest streak для привычки
 function calcLongestStreak(habit) {
     let count = 0;
     let currentDate = new Date();
@@ -85,6 +85,20 @@ function calcLongestStreak(habit) {
     }
     if (calcProgress(habit) === 100) count++;
     return count;
+}
+
+// найти привычку с самым долгим longest streak
+function findMaxLongestStreak() {
+    let max = -100;
+    let index = -1;
+    habits.forEach((habit, i) => {
+        const streak = calcLongestStreak(habit)
+        if (streak > max) {
+            max = streak;
+            index = i;
+        }
+    });
+    return index;
 }
 
 
@@ -165,7 +179,7 @@ wrapper.addEventListener('click', function (event) {
         let index = habits.findIndex(habit => habit.id === parseInt(habitID))
         let textHabit = habits[index].text;
         console.log(textHabit);
-        if(confirm(`Удалить привычку "${textHabit}"`)) {
+        if (confirm(`Удалить привычку "${textHabit}"`)) {
             if (index !== -1) {
                 habits.splice(index, 1);
                 saveHabits();
@@ -246,7 +260,7 @@ function recordStatistics() {
 
     numCompletedspan.textContent = 'Сегодня выполнено: ' + calcCompletedToday();
     sevenDaysCmopletedSpan.textContent = 'За неделю выполнено: ' + calcAvg7Days() + '%';
-    longestStreakSpan.textContent = 'Лучший стрик: ' + calcLongestStreak(habits[0]);
+    longestStreakSpan.textContent = 'Лучший стрик: ' + calcLongestStreak(habits[findMaxLongestStreak()]);
 }
 
 
