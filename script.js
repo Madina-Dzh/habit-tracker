@@ -216,6 +216,13 @@ function renderHabits() {
         btnMark.classList.add('right');
         newHabit.appendChild(btnMark);
 
+        // Кнопка изменения задачи
+        const btnEdit = document.createElement('button');
+        btnEdit.textContent = 'Изменить';
+        btnEdit.classList.add('right');
+        btnEdit.setAttribute('id', 'btn-edit');
+        newHabit.appendChild(btnEdit);
+
         // Создание кнопки удаления 
         const btnDel = document.createElement('button');
         btnDel.textContent = 'Удалить';
