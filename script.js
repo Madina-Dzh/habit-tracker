@@ -3,6 +3,7 @@
 let habits = []; // массив с привычками
 const addHabit_button = document.getElementById('addHabit_button');
 const wrapper = document.getElementById('habit-wrapper'); // контейнер со списком привычек 
+const editModal = document.getElementById('edit-modal');
 
 
 // ===== УТИЛИТЫ (чистые функции)=====
@@ -270,6 +271,117 @@ function recordStatistics() {
     longestStreakSpan.textContent = 'Лучший стрик: ' + calcLongestStreak(habits[findMaxLongestStreak()]);
 }
 
+// окно редактирования
+function renderEditModal(habit = habits[0]) {
+    editModal.innerHTML = "";
+
+    const labelName = document.createElement('label');
+    labelName.setAttribute('for', 'editText');
+    labelName.textContent = 'Название:';
+    editModal.appendChild(labelName);
+
+    const inputName = document.createElement('input');
+    inputName.setAttribute('type', 'text');
+    inputName.setAttribute('id', 'editText');
+    inputName.setAttribute('placeholder', 'Введите название');
+    inputName.setAttribute('value', habit.text);
+    editModal.appendChild(inputName);
+
+    const labelType = document.createElement('label');
+    labelType.setAttribute('for', 'editType');
+    labelType.textContent = 'Тип:';
+    editModal.appendChild(labelType);
+
+    // Настроить предопределенный вариант
+    const selectType = document.createElement('select');
+    selectType.setAttribute('id', 'editType');
+    selectType.setAttribute('value', habit.type);
+    const optionOnce = document.createElement('option');
+    optionOnce.setAttribute('value', 'once')
+    optionOnce.textContent = 'Сделать 1 раз';
+    selectType.appendChild(optionOnce);
+    const optionX = document.createElement('option');
+    optionX.setAttribute('value', 'x')
+    optionX.textContent = 'X раз в день';
+    selectType.appendChild(optionX);
+    const optionN = document.createElement('option');
+    optionN.setAttribute('value', 'n')
+    optionN.textContent = 'N минут';
+    selectType.appendChild(optionN);
+
+    const targetText = habit.type; // Замените на нужный текст
+
+        // Ищем опцию
+        for (let i = 0; i < selectType.options.length; i++) {
+            if (selectType.options[i].value === targetText) {
+                // Устанавливаем выбранным
+                selectType.selectedIndex = i;
+                break; // Прекращаем поиск, если нашли
+            }
+        }
+    
+    editModal.appendChild(selectType);
+
+    const labelGoal = document.createElement('label');
+    labelGoal.setAttribute('for', 'editGoal');
+    labelGoal.textContent = 'Цель на день:';
+    editModal.appendChild(labelGoal);
+
+    const inputGoal = document.createElement('input');
+    inputGoal.setAttribute('id', 'editGoal');
+    inputGoal.setAttribute('type', 'number');
+    inputGoal.setAttribute('value', habit.goal);
+    editModal.appendChild(inputGoal);
+
+    if (habit.type === 'once') {
+        const labelStatus = document.createElement('label');
+        labelStatus.setAttribute('for', 'editStatus');
+        labelStatus.textContent = 'Статус задачи:'
+        editModal.appendChild(labelStatus);
+
+        // Настроить предопределенный вариант
+        const selectStatus = document.createElement('select');
+        selectStatus.setAttribute('for', 'editStatus');
+        editModal.appendChild(selectStatus);
+
+        const optionTrue = document.createElement('option');
+        optionTrue.setAttribute('value', '1');
+        optionTrue.textContent = 'Выполнено';
+        selectStatus.appendChild(optionTrue)
+        const optionFalse = document.createElement('option');
+        optionFalse.setAttribute('value', '0');
+        optionFalse.textContent = 'Невыполнено';
+        selectStatus.appendChild(optionFalse);
+
+        const record = habit.history.find(h => h.date === formatDateISO());
+        if (record && record.value === 1) selectStatus.selectedIndex = 0;
+        else selectStatus.selectedIndex = 1;
+    }
+    else {
+        const labelMarkToday = document.createElement('label');
+        labelMarkToday.setAttribute('for', 'editMarkToday');
+        labelMarkToday.textContent = 'Выполнено сегодня:'
+        editModal.appendChild(labelMarkToday);
+
+        const inputMarkToday = document.createElement('input');
+        inputMarkToday.setAttribute('id', 'editMarkToday');
+        inputMarkToday.setAttribute('type', 'number');
+        const record = habit.history.find(h => h.date === formatDateISO());
+        if (!record) inputMarkToday.setAttribute('value', 0)
+        else inputMarkToday.setAttribute('value', record.value)
+        editModal.appendChild(inputMarkToday);
+    }
+
+    const buttonClose = document.createElement('button');
+    buttonClose.textContent = 'Закрыть';
+    editModal.appendChild(buttonClose);
+    const buttonSave = document.createElement('button');
+    buttonSave.textContent = 'Сохранить';
+    editModal.appendChild(buttonSave);
+
+    editModal.setAttribute('class', 'ModalWindow');
+}
+
 
 // ===== Инициализация =====
 
@@ -289,4 +401,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderHabits();
     recordStatistics();
+    renderEditModal();
 });

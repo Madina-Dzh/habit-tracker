@@ -9,33 +9,37 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <h1>Трекер привычек</h1>
-        <span class="annotation">Отслеживай прогресс каждый день</span>
-        <div class="form">
-            <input id="valHabit_input"/>
-            <select id="type_select">
-                <option value="once">Сделать 1 раз</option>
-                <option value="x">X раз в день</option>
-                <option value="n">N минут</option>
-            </select>
-            <input id="goal_input" type="number" placeholder="Значение X/N" />
-            <button id="addHabit_button">Добавить</button>
+    <div id="app">
+        <div class="wrapper">
+            <h1>Трекер привычек</h1>
+            <span class="annotation">Отслеживай прогресс каждый день</span>
+            <div class="form">
+                <input id="valHabit_input" />
+                <select id="type_select">
+                    <option value="once">Сделать 1 раз</option>
+                    <option value="x">X раз в день</option>
+                    <option value="n">N минут</option>
+                </select>
+                <input id="goal_input" type="number" placeholder="Значение X/N" />
+                <button id="addHabit_button">Добавить</button>
+            </div>
+            <section class="statistics">
+                <h2>Статистика</h2>
+                <p id="number-completed">Сегодня выполнено: [число]</p>
+                <p id="seven-days-completed">Всего привычек: [число]</p>
+                <p id="longest-streak">Лучший стрик: [число]</p>
+            </section>
+            <div id="habit-wrapper">
+                Пока нет привычек - создай первую
+            </div>
         </div>
-        <section class="statistics">
-            <h2>Статистика</h2>
-            <p id="number-completed">Сегодня выполнено: [число]</p>
-            <p id="seven-days-completed">Всего привычек: [число]</p>
-            <p id="longest-streak">Лучший стрик: [число]</p>
-        </section>
-        <div id="habit-wrapper">
-            Пока нет привычек - создай первую
-        </div>
+        <div id="edit-modal"></div>
+    </div>
+
 
     <script src="script.js">
 
     </script>
-    </div>
 </body>
 
 </html>
