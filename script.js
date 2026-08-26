@@ -188,6 +188,13 @@ wrapper.addEventListener('click', function (event) {
             }
         }
     }
+
+    // нажата кнопка "Изменить"
+    if (clickedElement.classList.contains('btn-edit')) {
+        let index = habits.findIndex(habit => habit.id === parseInt(habitID));
+
+        renderEditModal(habits[index]); 
+    }
 })
 
 
@@ -221,7 +228,7 @@ function renderHabits() {
         const btnEdit = document.createElement('button');
         btnEdit.textContent = 'Изменить';
         btnEdit.classList.add('right');
-        btnEdit.setAttribute('id', 'btn-edit');
+        btnEdit.classList.add('btn-edit');
         newHabit.appendChild(btnEdit);
 
         // Создание кнопки удаления 
@@ -272,7 +279,7 @@ function recordStatistics() {
 }
 
 // окно редактирования
-function renderEditModal(habit = habits[0]) {
+function renderEditModal(habit) {
     editModal.innerHTML = "";
 
     const labelName = document.createElement('label');
@@ -311,15 +318,15 @@ function renderEditModal(habit = habits[0]) {
 
     const targetText = habit.type; // Замените на нужный текст
 
-        // Ищем опцию
-        for (let i = 0; i < selectType.options.length; i++) {
-            if (selectType.options[i].value === targetText) {
-                // Устанавливаем выбранным
-                selectType.selectedIndex = i;
-                break; // Прекращаем поиск, если нашли
-            }
+    // Ищем опцию
+    for (let i = 0; i < selectType.options.length; i++) {
+        if (selectType.options[i].value === targetText) {
+            // Устанавливаем выбранным
+            selectType.selectedIndex = i;
+            break; // Прекращаем поиск, если нашли
         }
-    
+    }
+
     editModal.appendChild(selectType);
 
     const labelGoal = document.createElement('label');
@@ -401,5 +408,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderHabits();
     recordStatistics();
-    renderEditModal();
 });
