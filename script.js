@@ -380,6 +380,9 @@ function renderEditModal(habit) {
     }
 
     const buttonClose = document.createElement('button');
+    buttonClose.onclick = function() {
+        closeEditModal();
+    };
     buttonClose.textContent = 'Закрыть';
     editModal.appendChild(buttonClose);
     const buttonSave = document.createElement('button');
@@ -389,6 +392,9 @@ function renderEditModal(habit) {
     editModal.setAttribute('class', 'ModalWindow');
 }
 
+function closeEditModal() {
+    editModal.innerHTML = "";
+}
 
 // ===== Инициализация =====
 
