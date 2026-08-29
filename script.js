@@ -193,9 +193,28 @@ wrapper.addEventListener('click', function (event) {
     if (clickedElement.classList.contains('btn-edit')) {
         let index = habits.findIndex(habit => habit.id === parseInt(habitID));
 
-        renderEditModal(habits[index]); 
+        renderEditModal(habits[index]);
     }
 })
+
+// Кнопка сохранения изменений
+function saveChanges(id, text, type, goal) {
+    let countToday = document.getElementById('countMarkToday');
+    let index = habits.findIndex(habit => habit.id === parseInt(id));
+    habits[index].text = text;
+    habits[index].type = type;
+    habits[index].goal = goal;
+    let today = formatDateISO();
+    if (habits[index].history.some((h) => h.date === today)) {
+        habits[index].history[habits[index].history.length - 1].value = countToday.value;
+    }
+    else {
+        habits[index].history.push({ date: today, value: countToday.value });
+    }
+    saveHabits();
+    closeEditModal();
+    renderHabits();
+}
 
 
 // ===== ОТРИСОВКА (UI) =====
@@ -320,7 +339,7 @@ function renderEditModal(habit) {
 
     // Ищем опцию
     for (let i = 0; i < selectType.options.length; i++) {
-        if (selectType.options[i].value === targetText) {
+        if (selectType.options[i].value == targetText) {
             // Устанавливаем выбранным
             selectType.selectedIndex = i;
             break; // Прекращаем поиск, если нашли
@@ -342,14 +361,13 @@ function renderEditModal(habit) {
 
     if (habit.type === 'once') {
         const labelStatus = document.createElement('label');
-        labelStatus.setAttribute('for', 'editStatus');
+        labelStatus.setAttribute('for', 'countMarkToday');
         labelStatus.textContent = 'Статус задачи:'
         editModal.appendChild(labelStatus);
 
         // Настроить предопределенный вариант
         const selectStatus = document.createElement('select');
-        selectStatus.setAttribute('for', 'editStatus');
-        editModal.appendChild(selectStatus);
+        selectStatus.setAttribute('id', 'countMarkToday')
 
         const optionTrue = document.createElement('option');
         optionTrue.setAttribute('value', '1');
@@ -359,39 +377,53 @@ function renderEditModal(habit) {
         optionFalse.setAttribute('value', '0');
         optionFalse.textContent = 'Невыполнено';
         selectStatus.appendChild(optionFalse);
+        editModal.appendChild(selectStatus);
 
-        const record = habit.history.find(h => h.date === formatDateISO());
-        if (record && record.value === 1) selectStatus.selectedIndex = 0;
-        else selectStatus.selectedIndex = 1;
+        const todayISO = formatDateISO();
+        const record = habit.history.find(h => h.date === todayISO);
+
+        // Если запись есть И она выполнена — ставим «Выполнено», иначе «Невыполнено»
+        if (record && (record.value === 1 || record.value === '1')) {
+            selectStatus.value = '1'; // «Выполнено»
+        } else {
+            selectStatus.value = '0'; // «Невыполнено»
+        }
+        
     }
     else {
         const labelMarkToday = document.createElement('label');
-        labelMarkToday.setAttribute('for', 'editMarkToday');
+        labelMarkToday.setAttribute('for', 'countMarkToday');
         labelMarkToday.textContent = 'Выполнено сегодня:'
         editModal.appendChild(labelMarkToday);
 
         const inputMarkToday = document.createElement('input');
-        inputMarkToday.setAttribute('id', 'editMarkToday');
+        inputMarkToday.setAttribute('id', 'countMarkToday');
         inputMarkToday.setAttribute('type', 'number');
         const record = habit.history.find(h => h.date === formatDateISO());
         if (!record) inputMarkToday.setAttribute('value', 0)
         else inputMarkToday.setAttribute('value', record.value)
         editModal.appendChild(inputMarkToday);
+
+        countToday = inputMarkToday.value;
     }
 
     const buttonClose = document.createElement('button');
-    buttonClose.onclick = function() {
+    buttonClose.onclick = function () {
         closeEditModal();
     };
     buttonClose.textContent = 'Закрыть';
     editModal.appendChild(buttonClose);
     const buttonSave = document.createElement('button');
+    buttonSave.onclick = function () {
+        saveChanges(habit.id, inputName.value, selectType.value, inputGoal.value);
+    }
     buttonSave.textContent = 'Сохранить';
     editModal.appendChild(buttonSave);
 
     editModal.setAttribute('class', 'ModalWindow');
 }
 
+// функция для закрытия модального окна
 function closeEditModal() {
     editModal.innerHTML = "";
 }
