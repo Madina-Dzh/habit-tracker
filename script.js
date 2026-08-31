@@ -299,6 +299,7 @@ function recordStatistics() {
 
 // окно редактирования
 function renderEditModal(habit) {
+    editModal.classList.remove('hidden');
     editModal.innerHTML = "";
 
     const labelName = document.createElement('label');
@@ -426,6 +427,7 @@ function renderEditModal(habit) {
 // функция для закрытия модального окна
 function closeEditModal() {
     editModal.innerHTML = "";
+    editModal.classList.add('hidden');
 }
 
 // ===== Инициализация =====
