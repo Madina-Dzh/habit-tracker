@@ -236,47 +236,52 @@ function renderHabits() {
         spanHabit.textContent = habit.text;
         newHabit.appendChild(spanHabit);
 
-        // Создание кнопки "Сделано сегодня"
-        const btnMark = document.createElement('button');
-        btnMark.textContent = 'Сделано сегодня';
-        btnMark.classList.add('mark-btn');
-        btnMark.classList.add('right');
-        newHabit.appendChild(btnMark);
 
-        // Кнопка изменения задачи
-        const btnEdit = document.createElement('button');
-        btnEdit.textContent = 'Изменить';
-        btnEdit.classList.add('right');
-        btnEdit.classList.add('btn-edit');
-        newHabit.appendChild(btnEdit);
+        const buttons = document.createElement('div');
+        buttons.classList.add('habit-buttons');
 
         // Создание кнопки удаления 
         const btnDel = document.createElement('button');
         btnDel.textContent = 'Удалить';
         btnDel.classList.add('del-btn');
         btnDel.classList.add('right');
-        newHabit.appendChild(btnDel);
+        buttons.appendChild(btnDel);
 
-        // Создание прогресс бара
-        const progressBar = document.createElement('progress');
-        progressBar.classList.add('right');
-        progressBar.setAttribute('max', '100');
-        progressBar.setAttribute('value', calcProgress(habit));
-        newHabit.appendChild(progressBar);
+        // Кнопка изменения задачи
+        const btnEdit = document.createElement('button');
+        btnEdit.textContent = 'Изменить';
+        btnEdit.classList.add('right');
+        btnEdit.classList.add('btn-edit');
+        buttons.appendChild(btnEdit);
+
+        // Создание кнопки "Сделано сегодня"
+        const btnMark = document.createElement('button');
+        btnMark.textContent = 'Сделано сегодня';
+        btnMark.classList.add('mark-btn');
+        btnMark.classList.add('right');
+        buttons.appendChild(btnMark);
 
         // Создание поля для ввода минут
         if (habit.type === 'n') {
             const inputMinutes = document.createElement('input');
             inputMinutes.setAttribute('type', 'number');
-            inputMinutes.setAttribute('placeholder', 'Количество минут');
+            inputMinutes.setAttribute('placeholder', 'Минуты');
             inputMinutes.classList.add('num-minutes');
-            inputMinutes.classList.add('right');
 
             const record = habit.history.find(h => h.date === formatDateISO());
             if (record) inputMinutes.value = record.value;
-            newHabit.appendChild(inputMinutes);
+            buttons.appendChild(inputMinutes);
         }
 
+newHabit.appendChild(buttons);
+        // Создание прогресс бара
+        const progressBar = document.createElement('progress');
+        progressBar.classList.add('progress');
+        progressBar.setAttribute('max', '100');
+        progressBar.setAttribute('value', calcProgress(habit));
+        newHabit.appendChild(progressBar);
+
+        
         // Включение привычки в контейнер
         wrapper.appendChild(newHabit);
     });
@@ -389,7 +394,7 @@ function renderEditModal(habit) {
         } else {
             selectStatus.value = '0'; // «Невыполнено»
         }
-        
+
     }
     else {
         const labelMarkToday = document.createElement('label');

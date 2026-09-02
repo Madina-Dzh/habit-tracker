@@ -64,9 +64,40 @@ h2 {
     margin: 20px 10px 0 0px;
 }
 
+.habit-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5%;
+}
+
+.habit-el button {
+    border-radius: 12px;
+    border: none;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.habit-el span {
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.num-minutes {
+    border-radius: 12px;
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    background-color:#f0f0f0;
+}
+
 .right {
     float: right;
 }
+
+.progress {
+    width: 100%;
+}
+
 
 #app {
     position: relative;
