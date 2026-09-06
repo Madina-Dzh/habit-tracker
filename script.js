@@ -154,7 +154,7 @@ wrapper.addEventListener('click', function (event) {
             // Логика x раз
             if (habit.history.some((h) => h.date === today)) {
                 let index = habit.history.findIndex(item => item.date === today); // Индекс записи в истории сегодня
-                habit.history[index].value = habit.history[index].value + 1;
+                habit.history[index].value = habit.history[index].value + 1; 
             }
             else {
                 habit.history.push({ date: today, value: 1 })
@@ -163,12 +163,16 @@ wrapper.addEventListener('click', function (event) {
         else {
             // Логика n Minute сделать
             if (habit.history.some((h) => h.date === today)) {
+                console.log('Условие сработало');
                 let index = habit.history.findIndex(item => item.date === today); // Индекс записи в истории сегодня
+                console.log('Индекс: ', index);
                 habit.history[index].value = minutes.value;
+                console.log('Новое значение: ', habit.history[index].value)
             }
             else {
                 habit.history.push({ date: today, value: minutes })
             }
+            
         }
         saveHabits();
         renderHabits();
